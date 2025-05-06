@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: myapp-backend
+    volumes:
+      - ./backend:/app
+    command: >
+        uvicorn app.main:app
+        --host 0.0.0.0
+        --port 8000
+        --reload
+    environment:
+      DB_HOST: db
+      DB_NAME: mydatabase
+      DB_USER: myuser
+      DB_PASSWORD: "2580123"
+      REDIS_HOST: redis
+      SECRET_KEY: SUPERSECRETJWTKEY
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+  db:
+    image: postgres:13
+    container_name: dbprojectsql_db_1
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: "2580123"
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+asyncpg
+SQLAlchemy
+psycopg2-binary
+pydantic[email]
+python-jose
+passlib[bcrypt]
+python-dotenv
+redis
+PyJWT>=2.0.0
